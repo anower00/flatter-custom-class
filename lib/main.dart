@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quote.dart';
+import 'quote_card.dart';
 
 void main() => runApp(MaterialApp(
   home: Quotes(),
@@ -18,37 +19,6 @@ class _QuotesState extends State<Quotes> {
     Quote(text: 'Lorem Ipsum is simply', author: 'Tipu'),
   ];
 
-  Widget quoteTemplate(quote){
-    return Card(
-      margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                quote.text,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.grey[600],
-                ),
-              ),
-              SizedBox(height: 6.0),
-              Text(
-                quote.author,
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.grey[800],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +29,17 @@ class _QuotesState extends State<Quotes> {
         backgroundColor: Colors.redAccent,
       ),
       body: Column(
-        children: quotes.map((quote) => quoteTemplate(quote)).toList(),
+        children: quotes.map((quote) => QuoteCard(
+            quote:quote,
+            delete: () {
+              setState(() {
+                quotes.remove(quote);
+              });
+        },
+        )).toList(),
       ),
     );
   }
 }
+
 
